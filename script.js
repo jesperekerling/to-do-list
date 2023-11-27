@@ -79,6 +79,100 @@ form.addEventListener('submit', async (e) => {
 })
 
 
+
+
+
+const BASE_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
+const userList = document.querySelector('#user-list')
+
+let users = []
+
+const getUsers = async () => {
+  try {
+    const res = await fetch(BASE_URL)
+    console.log(res)
+  
+    if(res.status !== 200) {
+      throw new Error('Something went wrong, status: ' + res.status)
+    }
+
+    const data = await res.json()
+
+    console.log(data)
+    data.forEach(user => users.push(user))
+
+    renderUsers()
+
+
+  } catch(err) {
+    document.body.insertAdjacentHTML('beforeend', `
+    <div class="pop" id="toast">
+      Something went wrong
+    </div>
+    `)
+    document.querySelector('#toast').addEventListener('animationend', e => {
+      e.target.remove()
+    })
+    //console.error(err.message)
+  }
+
+}
+getUsers()
+
+
+
+function renderUsers() {
+  userList.innerHTML = data
+  users.forEach(user => {
+    users.insertAdjacentHTML('beforeend', `
+    <div class="task flex" id="${users.id}">
+         <div class="todoText">${users.title}</p>
+         <div class="buttons"></div>
+       </div>
+      <button data-user-id="${_id}" id="${_id}" class="btn remove-btn"><i class="fa-solid fa-trash"></i></button>    </li>
+    `)
+
+    document.querySelector('#remove-' + user.id).addEventListener('click', async () => {
+
+      try {
+        const res = await fetch(BASE_URL + user.id, {
+          method: 'DELETE'
+        })
+  
+        console.log(res) 
+
+        if(res.status !== 200) {
+          throw new Error('Could not delete the user: ' + res.status)
+        }
+
+        // const data = await res.json()
+        // console.log(data)
+        
+        users.splice(users.indexOf(user), 1)
+
+        // users = users.filter(_user => _user.id !== data)
+        renderUsers()
+      } 
+      catch (error) {
+        document.body.insertAdjacentHTML('beforeend', `
+        <div class="pop" id="toast">
+          Something went wrong
+        </div>
+        `)
+        document.querySelector('#toast').addEventListener('animationend', e => {
+          e.target.remove()
+        })
+        console.error(err.message)
+      }
+     
+
+    })
+
+  })
+}
+
+
+
 /*
 
 function createTaskElement () {
