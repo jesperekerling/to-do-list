@@ -54,3 +54,11 @@ h1, h2 {
 footer {
     margin: 5rem auto;
 }
+.btn-success {
+    background-color: #525206;
+    border: 0;
+}
+.btn-danger {
+    background-color: #525206;
+    border: 0;
+}

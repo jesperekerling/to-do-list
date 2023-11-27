@@ -1,4 +1,3 @@
-
 // Project mission: Create a todo app with a list of tasks
 // Functions: Display tasks, Add task, Fetch thorught API, POST to API, DELETE from API, UPDATE API
 
@@ -13,9 +12,6 @@ const API_KEY = 'd0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 
 const taskList = document.querySelector('#taskList')
 
-
-
-let tasks = []
 
 
 
@@ -43,7 +39,7 @@ form.addEventListener('submit', async (e) => {
     const apiresponse = await fetch("https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe", {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
-      body: JSON.stringify(addTask)
+      body: JSON.stringify()
     })
   
     console.log(apiresponse)
@@ -51,10 +47,15 @@ form.addEventListener('submit', async (e) => {
       throw new Error('Could not create new to do note: ' + apiresponse.status)
     }
 
+
+
     const newTask = await apiresponse.json()
     
     //taskList.shift(newTask)
-    
+    const newTaskTitle = document.querySelector("#taskInput")
+
+    taskList.innerHTML = `<p>newTaskTitle</p>`
+
     taskList.insertAdjacentHTML('afterbegin', `
        <div class="task flex" id="${newTask.id}">
          <div class="todoText">${newTask.title}</p>
@@ -76,6 +77,44 @@ form.addEventListener('submit', async (e) => {
     
   }
 })
+
+function createTaskElement('submit', async (e) => {
+  e.preventDefault()
+  const div = document.createElement("div")
+  div.innerText = "hej"
+}
+
+
+// GET POSTS
+
+
+/*
+async function getTasks () {
+  console.log("hej")
+  const tasks = await fetch("https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe", {
+  method: 'GET',
+  headers: {'Content-type': 'application/json'},
+  body: JSON.stringify(tasks)
+  })
+
+  const displayTasks = await Response.json();
+  console.log(displayTasks)
+  console.log("hej2")
+}
+
+getTasks()
+
+*/
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -99,9 +138,9 @@ form.addEventListener('submit', async (e) => {
 
 
 
-
-
 /*
+
+
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     const ul = document.getElementById("taskList");
