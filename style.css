@@ -1,0 +1,56 @@
+body {
+    background-color: rgb(216, 216, 195);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.2em;
+}
+
+a {
+    color: darkblue;
+    text-decoration: none;
+}
+h1, h2 {
+    margin: 3rem 0 1.75rem;
+    font-weight: 600;
+}
+
+.container {
+    max-width: 600px !important;
+    margin: 2rem auto;
+}
+.wrapper {
+    padding: 4em;
+    background-color: #ffffff50;
+    border-radius: 2rem;
+}
+.add-task-input {
+    width: 100%;
+    padding: 1.4rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 0px solid #808029;
+    margin-bottom: 1rem;
+
+}
+.btn-primary {
+    background-color: #525206;
+    border-color: #525206;
+    font-weight: 600;
+    padding: 0.95rem 3rem;
+}
+.task {
+    background-color: #ffffff80;
+    padding: 1rem 1.5rem;
+    font-weight: 600;
+    display: flex;
+}
+.task .todoText{
+    display: inline-block;
+    width: 60%;
+}
+.task .buttons {
+    display: inline-block;
+    width: 40%;
+    text-align: right;
+}
+footer {
+    margin: 5rem auto;
+}

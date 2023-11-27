@@ -3,9 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To list - School project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <header>
+            <h1 class="text-center">Tasks</h1>
+        </header>
+        <main class="wrapper">
+            <form id="addTaskForm">
+                <input type="text" id="taskInput" class="form-control add-task-input" placeholder="Describe task..">
+                <button id="submit" class="btn btn-primary w-100" title="Add new to do item to the to do list">Add something</button>
+            </form>
+            <h2>Things to do</h2>
+            <div id="taskList">
+                <div class="task flex" id="task-1">
+                    <div class="todoText">Thing to do 1</div>
+                    <div class="buttons">
+                        <button class="btn btn-success">Done</button>
+                        <button class="btn btn-danger">Remove</button>
+                    </div>
+                </div>
+                <div class="task flex" id="task-2">
+                    <div class="todoText">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, sint adipisci labore aperiam earum vero quae ducimus voluptate provident, eum, esse distinctio voluptatem voluptatibus tempore repellendus excepturi eveniet ut autem.</div>
+                    <div class="buttons">
+                        <button class="btn btn-success">Done</button>
+                        <button class="btn btn-danger">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="text-center">
+            <p>Created by <a href="https://ekerling.com" target="_blank">ekerling.com</a></p>
+        </footer>
+    </div>
+    <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
