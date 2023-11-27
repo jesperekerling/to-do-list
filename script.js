@@ -39,7 +39,7 @@ form.addEventListener('submit', async (e) => {
     const apiresponse = await fetch("https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe", {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
-      body: JSON.stringify()
+      body: JSON.stringify(addTask)
     })
   
     console.log(apiresponse)
@@ -78,14 +78,24 @@ form.addEventListener('submit', async (e) => {
   }
 })
 
-function createTaskElement('submit', async (e) => {
-  e.preventDefault()
-  const div = document.createElement("div")
-  div.innerText = "hej"
+
+/*
+
+function createTaskElement () {
+  const form2 = document.querySelector("#addTaskForm2")
+  form2.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const div = document.createElement("div")
+    const taskInput2 = document.getElementById("taskInput2").value
+
+    const t = document.createTextNode(taskInput2)
+    div.appendChild(t)
+    console.log("HERE??j")
+  })
 }
-
-
 // GET POSTS
+*/
+
 
 
 /*
