@@ -81,16 +81,16 @@ form.addEventListener('submit', async (e) => {
 
 
 
-
+// Get tasks
 const BASE_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 const userList = document.querySelector('#user-list')
 
 let users = []
 
-const getUsers = async () => {
+const getTasks = async () => {
   try {
     const res = await fetch(BASE_URL)
-    console.log(res)
+    //console.log(res)
   
     if(res.status !== 200) {
       throw new Error('Something went wrong, status: ' + res.status)
@@ -98,11 +98,21 @@ const getUsers = async () => {
 
     const data = await res.json()
 
-    console.log(data)
+
     data.forEach(user => users.push(user))
 
-    renderUsers()
 
+    data.forEach(todo => {
+      const taskListParent = document.createElement("div")
+      const taskListItem = document.createElement("div")
+      
+      taskListItem.classList("task")
+
+      taskListItem.textContent = todo.title
+      taskListItem.setAttribute("id", todo._id)
+      console.log(todo)
+      append
+    })
 
   } catch(err) {
     document.body.insertAdjacentHTML('beforeend', `
@@ -117,7 +127,7 @@ const getUsers = async () => {
   }
 
 }
-getUsers()
+getTasks()
 
 
 
