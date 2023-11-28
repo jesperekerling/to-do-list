@@ -99,19 +99,52 @@ const getTasks = async () => {
     const data = await res.json()
 
 
-    data.forEach(user => users.push(user))
+    //data.forEach(user => users.push(user))
 
+    const taskList = document.querySelector("#taskList")
+  
+    taskList.innerHTML = ""
 
+    
+    // Sätta ID
+    // Delete request
+    
     data.forEach(todo => {
-      const taskListParent = document.createElement("div")
-      const taskListItem = document.createElement("div")
       
-      taskListItem.classList("task")
+      
+      const taskListItem = document.createElement("div")
+      taskListItem.classList.add("task", "flex")
+      
+      const taskListItemTitle = document.createElement("div")
+      taskListItemTitle.classList.add("todoText")
+      taskListItemTitle.textContent = todo.title
+      
+      const taskListItemButtonsDiv = document.createElement("div")
+      taskListItemButtonsDiv.classList.add("buttons")
+      
+      const taskListItemButtonChecked = document.createElement("button")
+      taskListItemButtonChecked.classList.add("btn", "btn-success")
+      taskListItemButtonChecked.textContent = "Done"
+      
+      const taskListItemButtonDelete = document.createElement("button")
+      taskListItemButtonDelete.classList.add("btn", "btn-danger")
+      taskListItemButtonDelete.textContent = "Delete"
 
-      taskListItem.textContent = todo.title
-      taskListItem.setAttribute("id", todo._id)
-      console.log(todo)
-      append
+
+      
+      taskList.appendChild(taskListItem)
+      taskListItem.appendChild(taskListItemTitle)
+      taskListItem.appendChild(taskListItemButtonsDiv)
+      taskListItemButtonsDiv.appendChild(taskListItemButtonChecked)
+      taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
+
+      
+      
+      console.log(taskList)
+
+      
+  
+            
     })
 
   } catch(err) {
@@ -125,9 +158,16 @@ const getTasks = async () => {
     })
     //console.error(err.message)
   }
-
 }
+
 getTasks()
+
+
+
+
+
+
+
 
 
 
