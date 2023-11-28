@@ -30,17 +30,17 @@ h1, h2 {
     margin-bottom: 1rem;
 
 }
-.btn-primary {
-    background-color: #525206;
-    border-color: #525206;
-    font-weight: 600;
-    padding: 0.95rem 3rem;
-}
+
 .task {
     background-color: #ffffff80;
     padding: 1rem 1.5rem;
     font-weight: 600;
     display: flex;
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+}
+.task:hover {
+    background-color: #00000017;
 }
 .task .todoText{
     display: inline-block;
@@ -54,6 +54,13 @@ h1, h2 {
 footer {
     margin: 5rem auto;
 }
+
+.btn-primary {
+    background-color: #525206;
+    border-color: #525206;
+    font-weight: 600;
+    padding: 0.95rem 3rem;
+}
 .btn-success {
     background-color: #525206;
     border: 0;
@@ -61,4 +68,9 @@ footer {
 .btn-danger {
     background-color: #525206;
     border: 0;
+    margin-left: .3rem;
+}
+.btn-success, .btn-danger {
+    font-weight: 800;
+    font-size: 70%;
 }
