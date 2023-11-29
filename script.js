@@ -115,7 +115,9 @@ const getTasks = async () => {
       const taskListItemButtonDelete = document.createElement("button")
       taskListItemButtonDelete.classList.add("btn", "btn-danger")
       taskListItemButtonDelete.setAttribute("title", "Delete Task")
-      taskListItemButtonDelete.textContent = "Delete"
+//      taskListItemButtonDelete.textContent = "Delete"
+      taskListItemButtonDelete.insertAdjacentHTML("afterbegin", "<i class=\"las la-trash\"></i> ")
+
       
       taskList.appendChild(taskListItem)
       taskListItem.appendChild(taskListItemTitle)
@@ -127,6 +129,11 @@ const getTasks = async () => {
 
       taskListItemButtonDelete.setAttribute("id", todo._id);
 
+
+
+      //CHANGES FOR CHECKS HERE
+
+      
       // check for the completed status and if completed is false, show the popup and don't delete the todo
       // if completed is true, delete the todo
       taskListItemButtonDelete.addEventListener('click', async () => {
@@ -184,10 +191,18 @@ const deleteTodo = async (id) => {
 }
 
 
+const completed = document.getElementById("button")
+
+completed.addEventListener("click", (event) => {
+  event.target.classList.add("completed", todo._id);
+})
+  //completed.classList.add("completed");
+
 
 
 function markAsCompleted () {
-  const completed = addEventListener("click", async () => {
-    buttonID.classList.add("completed", todo._id);
+  const completed = document.getElementById("button")
+  completed.addEventListener("click", (event) => {
+    event.target.classList.add("completed", todo._id);
   })
 }
