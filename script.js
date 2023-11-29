@@ -150,7 +150,7 @@ const getTasks = async () => {
   } catch(err) {
     document.body.insertAdjacentHTML('beforeend', `
     <div class="pop" id="toast">
-      Something went wrong
+      Something went wrong 1
     </div>
     `)
     document.querySelector('#toast').addEventListener('animationend', e => {
@@ -171,7 +171,7 @@ getTasks()
 
 
 
-function renderUsers() {
+function showTasks() {
   userList.innerHTML = data
   users.forEach(user => {
     users.insertAdjacentHTML('beforeend', `
@@ -201,12 +201,12 @@ function renderUsers() {
         users.splice(users.indexOf(user), 1)
 
         // users = users.filter(_user => _user.id !== data)
-        renderUsers()
+        showTasks()
       } 
       catch (error) {
         document.body.insertAdjacentHTML('beforeend', `
         <div class="pop" id="toast">
-          Something went wrong
+          Something went wrong 2
         </div>
         `)
         document.querySelector('#toast').addEventListener('animationend', e => {
@@ -220,120 +220,3 @@ function renderUsers() {
 
   })
 }
-
-
-
-/*
-
-function createTaskElement () {
-  const form2 = document.querySelector("#addTaskForm2")
-  form2.addEventListener('submit', async (e) => {
-    e.preventDefault()
-    const div = document.createElement("div")
-    const taskInput2 = document.getElementById("taskInput2").value
-
-    const t = document.createTextNode(taskInput2)
-    div.appendChild(t)
-    console.log("HERE??j")
-  })
-}
-// GET POSTS
-*/
-
-
-
-/*
-async function getTasks () {
-  console.log("hej")
-  const tasks = await fetch("https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe", {
-  method: 'GET',
-  headers: {'Content-type': 'application/json'},
-  body: JSON.stringify(tasks)
-  })
-
-  const displayTasks = await Response.json();
-  console.log(displayTasks)
-  console.log("hej2")
-}
-
-getTasks()
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// POST TASK 
-// Add a new task to the API.
-
-
-
-
-
-/*
-
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const ul = document.getElementById("taskList");
-    const li = document.createElement("li");
-    li.appendChild(document.createTextNode("Element 4"));
-})
-
-
-async function createTask() {
-    const taskName = document.querySelector('#taskInput').value
-    
-
-    const task = {
-        taskName,
-        completed: false
-    }
-
-    try {
-
-        const res = await fetch(`https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(post)
-        })
-        console.log(res)
-        if(res.status !== 201) {
-            throw new Error(res.status)
-        }
-        
-
-    } catch (error) {
-        console.log(res) 
-        if(res.status !== 201) {
-            console.log(res.status)
-            document.querySelector('#form-error').classList.add('invalid')
-        }
-    }
-    
-}
-*/
