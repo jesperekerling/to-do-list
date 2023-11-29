@@ -17,7 +17,8 @@ const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b
 const taskList = document.querySelector('#taskList')
 const createTaskForm = document.querySelector('#addTaskForm')
 
-
+    // Sätta ID
+    // Delete request
 
 
 /* CREATE TASK
@@ -70,10 +71,6 @@ createTaskForm.addEventListener('submit', async (e) => {
 
 // Get tasks
 
-
-
-
-
 const updateTasks = async () => {
   try {
     const res = await fetch(API_URL)
@@ -84,13 +81,8 @@ const updateTasks = async () => {
     }
 
     const data = await res.json()
- 
   
     taskList.innerHTML = ""
-
-  
-    // Sätta ID
-    // Delete request
     
     data.forEach(todo => {
       
