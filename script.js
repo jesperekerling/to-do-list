@@ -51,7 +51,7 @@ createTaskForm.addEventListener('submit', async (e) => {
     const newTask = await apiresponse.json()
 
   } catch (err) {
-    document.createEleme('beforeend', `
+    document.createElement('beforeend', `
     <div class="pop" id="toast">
       Something with your input is wrong.
     </div>
@@ -70,7 +70,7 @@ createTaskForm.addEventListener('submit', async (e) => {
 
 // Get tasks
 
-const userList = document.querySelector('#user-list')
+
 
 
 
