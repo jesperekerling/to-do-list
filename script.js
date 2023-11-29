@@ -56,7 +56,7 @@ createTaskForm.addEventListener('submit', async (e) => {
       Something with your input is wrong.
     </div>
     `)
-    getTasks()
+    updateTasks()
     createTaskForm.reset()
     document.querySelector('#toast').addEventListener('animationend', e => {
       e.target.remove()
@@ -74,7 +74,7 @@ const userList = document.querySelector('#user-list')
 
 
 
-const getTasks = async () => {
+const updateTasks = async () => {
   try {
     const res = await fetch(API_URL)
     //console.log(res)
@@ -150,6 +150,20 @@ const getTasks = async () => {
           }
       });
 
+      taskListItemButtonStatus.addEventListener('click', async () => {
+        if(todo.completed === true) {
+            popup.classList.add("open-popup");
+            closeBtn.addEventListener('click', () => {
+                popup.classList.remove("open-popup");
+            })
+            
+            return;
+        }
+        else if(todo.completed === false){
+            await updateTodo(todo.completed);
+        }
+    });
+
       
       
     })
@@ -163,11 +177,10 @@ const getTasks = async () => {
     document.querySelector('#toast').addEventListener('animationend', e => {
       e.target.remove()
     })
-    //console.error(err.message)
   }
 }
 
-getTasks()
+updateTasks()
 
 
 //DELETE (Delete a todo from the server and from the page)
@@ -176,20 +189,48 @@ const deleteTodo = async (id) => {
   //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.
   const API_URL2 = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`;
   const apiResponse2 = await fetch(API_URL2, {
-      method: 'DELETE',
+      method: 'DELETE'
   });
   
   if(!apiResponse2.ok) {
-      console.log(response);
+      console.log(apiResponse2)
       return;
   }
 
   const todoId = await apiResponse2.json();
   console.log("Task item deleted: " + todoId)
   
-  getTasks();
+  updateTasks();
 }
 
+
+const updateTodo = async (id, completed) => {
+
+  //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.
+  const API_URL = `https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`;
+  const apiResponse3 = await fetch(API_URL, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+  });
+  
+  if(!apiResponse3.ok) {
+      console.log(apiResponse3)
+      return;
+  }
+
+  const todoId2 = await apiResponse3.json();
+  console.log("Task item updated: " + todoId2)
+  
+  updateTasks();
+}
+
+
+
+
+/*
 
 const completed = document.getElementById("button")
 
@@ -206,3 +247,5 @@ function markAsCompleted () {
     event.target.classList.add("completed", todo._id);
   })
 }
+
+*/
