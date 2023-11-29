@@ -15,6 +15,49 @@ const taskList = document.querySelector('#taskList')
 
 
 
+/*
+async function updateTaskList() {
+  try {
+    const response = await fetch('https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'); // replace with your API URL
+    const data = await response.json();
+
+    const taskList = document.querySelector("#taskList");
+    taskList.innerHTML = "";
+
+    data.forEach(todo => {
+      // your existing code to create and append elements
+    });
+  } catch(err) {
+    // your existing error handling code
+  }
+}
+
+// Call this function initially to populate the task list
+updateTaskList();
+
+// After a successful POST request, call this function again
+// For example:
+async function addNewItem() {
+  try {
+    const response = await fetch('https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe', {
+      method: 'POST',
+      // other fetch options...
+    });
+
+    if (response.ok) {
+      // If the POST request was successful, update the task list
+      updateTaskList();
+    } else {
+      // Handle error
+    }
+  } catch(err) {
+    // Handle error
+  }
+}
+
+
+*/
+
 
 /* CREATE TASK
 
@@ -52,7 +95,7 @@ form.addEventListener('submit', async (e) => {
     const newTask = await apiresponse.json()
     
     //taskList.shift(newTask)
-    const newTaskTitle = document.querySelector("#taskInput")
+    //const newTaskTitle = document.querySelector("#taskInput")
 
     taskList.innerHTML = `<p>newTaskTitle</p>`
 
@@ -65,6 +108,7 @@ form.addEventListener('submit', async (e) => {
 
       form.reset()
 
+      updateTaskList()
   } catch (err) {
     document.body.insertAdjacentHTML('beforeend', `
     <div class="pop" id="toast">
@@ -167,8 +211,7 @@ getTasks()
 
 
 
-
-
+/*
 
 
 function showTasks() {
@@ -220,3 +263,6 @@ function showTasks() {
 
   })
 }
+
+
+*/
