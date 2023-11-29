@@ -14,7 +14,6 @@ const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b
 
 
 
-
 const taskList = document.querySelector('#taskList')
 const createTaskForm = document.querySelector('#addTaskForm')
 
@@ -45,15 +44,11 @@ createTaskForm.addEventListener('submit', async (e) => {
       body: JSON.stringify(addTask)
     })
   
-    
     if(res.status !== 201) {
       throw new Error('Could not create new to do note: ' + apiresponse.status)
     }
     console.log("hej")
     const newTask = await apiresponse.json()
-
-
-
 
   } catch (err) {
     document.createElement('beforeend', `
@@ -89,12 +84,11 @@ const getTasks = async () => {
     }
 
     const data = await res.json()
-
-    
+ 
   
     taskList.innerHTML = ""
 
-    
+  
     // Sätta ID
     // Delete request
     
@@ -121,7 +115,6 @@ const getTasks = async () => {
       taskListItemButtonDelete.classList.add("btn", "btn-danger")
       taskListItemButtonDelete.setAttribute("title", "Delete Task")
       taskListItemButtonDelete.textContent = "Delete"
-      //taskListItemButtonDelete.setAttribute("onclick", "deleteTaskItem()")
       
       taskList.appendChild(taskListItem)
       taskListItem.appendChild(taskListItemTitle)
@@ -129,7 +122,7 @@ const getTasks = async () => {
       taskListItemButtonsDiv.appendChild(taskListItemButtonStatus)
       taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
       
-      //const deleteTaskItem = document.children("task")
+
 
       taskListItemButtonDelete.setAttribute("id", todo._id);
 
@@ -171,18 +164,29 @@ getTasks()
 
 //DELETE (Delete a todo from the server and from the page)
 const deleteTodo = async (id) => {
+
+  //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.
   const API_URL2 = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`;
-  const response = await fetch(API_URL2, {
+  const apiResponse2 = await fetch(API_URL2, {
       method: 'DELETE',
   });
   
-  if(!response.ok) {
+  if(!apiResponse2.ok) {
       console.log(response);
       return;
   }
 
-  const todoId = await response.json();
+  const todoId = await apiResponse2.json();
   console.log("Task item deleted: " + todoId)
   
   getTasks();
+}
+
+
+
+
+function markAsCompleted () {
+  const completed = addEventListener("click", async () => {
+    buttonID.classList.add("completed", todo._id);
+  })
 }
