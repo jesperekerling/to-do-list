@@ -9,11 +9,14 @@
 // URL for GET, POST and PUT
 const API_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 
+// URL for GET ID, PUT ID and DELETE
+const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 
-const API_KEY = 'd0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
+
+
 
 const taskList = document.querySelector('#taskList')
-
+const createTaskForm = document.querySelector('#addTaskForm')
 
 
 
@@ -22,20 +25,18 @@ const taskList = document.querySelector('#taskList')
 
 Functions:
 - Save value from input "describe task" input to a variable
-- Add the task to API
+- Send input data to API
 
 */
 
-const form = document.querySelector('#addTaskForm')
 
-form.addEventListener('submit', async (e) => {
+createTaskForm.addEventListener('submit', async (e) => {
   e.preventDefault()
 
   const addTask = {
-    title: form['taskInput'].value,
+    title: createTaskForm['taskInput'].value,
     completed: false
   }
-//  console.log(addTask)
 
   try {
     const apiresponse = await fetch(API_URL, {
@@ -44,36 +45,24 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(addTask)
     })
   
-    console.log(apiresponse)
+    
     if(res.status !== 201) {
       throw new Error('Could not create new to do note: ' + apiresponse.status)
     }
-
+    console.log("hej")
     const newTask = await apiresponse.json()
-    
-    //taskList.shift(newTask)
-    //const newTaskTitle = document.querySelector("#taskInput")
 
-    //taskList.innerHTML = `<p>newTaskTitle</p>`
 
-    /*
-    taskList.insertAdjacentHTML('afterbegin', `
-       <div class="task flex" id="${newTask.id}">
-         <div class="todoText">${newTask.title}</p>
-         <div class="buttons"></div>
-       </div>
-    `)
-    */
 
-      form.reset()
 
-      updateTaskList()
   } catch (err) {
-    document.body.insertAdjacentHTML('beforeend', `
+    document.createElement('beforeend', `
     <div class="pop" id="toast">
-      Something went wrong
+      Something with your input is wrong.
     </div>
     `)
+    getTasks()
+    createTaskForm.reset()
     document.querySelector('#toast').addEventListener('animationend', e => {
       e.target.remove()
     })
@@ -88,7 +77,7 @@ form.addEventListener('submit', async (e) => {
 
 const userList = document.querySelector('#user-list')
 
-let users = []
+
 
 const getTasks = async () => {
   try {
@@ -101,10 +90,7 @@ const getTasks = async () => {
 
     const data = await res.json()
 
-
-    //data.forEach(user => users.push(user))
-
-    const taskList = document.querySelector("#taskList")
+    
   
     taskList.innerHTML = ""
 
@@ -117,6 +103,7 @@ const getTasks = async () => {
       // Creates the task list HTML with JavaScript
       const taskListItem = document.createElement("div")
       taskListItem.classList.add("task", "flex")
+      taskListItem.setAttribute("id", todo._id);
       
       const taskListItemTitle = document.createElement("div")
       taskListItemTitle.classList.add("todoText")
@@ -125,22 +112,45 @@ const getTasks = async () => {
       const taskListItemButtonsDiv = document.createElement("div")
       taskListItemButtonsDiv.classList.add("buttons")
       
-      const taskListItemButtonChecked = document.createElement("button")
-      taskListItemButtonChecked.classList.add("btn", "btn-success")
-      taskListItemButtonChecked.textContent = "Done"
+      const taskListItemButtonStatus = document.createElement("button")
+      taskListItemButtonStatus.classList.add("btn", "btn-success")
+      taskListItemButtonStatus.setAttribute("title", "Mark task as completed")
+      taskListItemButtonStatus.textContent = "Done"
       
       const taskListItemButtonDelete = document.createElement("button")
       taskListItemButtonDelete.classList.add("btn", "btn-danger")
+      taskListItemButtonDelete.setAttribute("title", "Delete Task")
       taskListItemButtonDelete.textContent = "Delete"
+      //taskListItemButtonDelete.setAttribute("onclick", "deleteTaskItem()")
       
       taskList.appendChild(taskListItem)
       taskListItem.appendChild(taskListItemTitle)
       taskListItem.appendChild(taskListItemButtonsDiv)
-      taskListItemButtonsDiv.appendChild(taskListItemButtonChecked)
+      taskListItemButtonsDiv.appendChild(taskListItemButtonStatus)
       taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
       
-      console.log(taskList)
-            
+      //const deleteTaskItem = document.children("task")
+
+      taskListItemButtonDelete.setAttribute("id", todo._id);
+
+      // check for the completed status and if completed is false, show the popup and don't delete the todo
+      // if completed is true, delete the todo
+      taskListItemButtonDelete.addEventListener('click', async () => {
+          if(todo.completed === true) {
+              popup.classList.add("open-popup");
+              closeBtn.addEventListener('click', () => {
+                  popup.classList.remove("open-popup");
+              })
+              
+              return;
+          }
+          else if(todo.completed === false){
+              await deleteTodo(todo._id);
+          }
+      });
+
+      
+      
     })
 
   } catch(err) {
@@ -159,48 +169,20 @@ const getTasks = async () => {
 getTasks()
 
 
-
-
-
-/* Suggest from Chatgtp
-async function updateTaskList() {
-  try {
-    const response = await fetch('https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'); // replace with your API URL
-    const data = await response.json();
-
-    const taskList = document.querySelector("#taskList");
-    taskList.innerHTML = "";
-
-    data.forEach(todo => {
-      // your existing code to create and append elements
-    });
-  } catch(err) {
-    // your existing error handling code
+//DELETE (Delete a todo from the server and from the page)
+const deleteTodo = async (id) => {
+  const API_URL2 = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`;
+  const response = await fetch(API_URL2, {
+      method: 'DELETE',
+  });
+  
+  if(!response.ok) {
+      console.log(response);
+      return;
   }
+
+  const todoId = await response.json();
+  console.log("Task item deleted: " + todoId)
+  
+  getTasks();
 }
-
-// Call this function initially to populate the task list
-updateTaskList();
-
-// After a successful POST request, call this function again
-// For example:
-async function addNewItem() {
-  try {
-    const response = await fetch('https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe', {
-      method: 'POST',
-      // other fetch options...
-    });
-
-    if (response.ok) {
-      // If the POST request was successful, update the task list
-      updateTaskList();
-    } else {
-      // Handle error
-    }
-  } catch(err) {
-    // Handle error
-  }
-}
-
-
-*/
