@@ -1,3 +1,5 @@
+
+
 body {
     background-color: rgb(216, 216, 195);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -73,6 +75,10 @@ footer {
     background-color: #525206;
     border: 0;
 }
+.btn-success i {
+    margin-right: 0.1em;
+    vertical-align: middle;
+}
 .btn-danger {
     background-color: #525206;
     border: 0;
@@ -85,4 +91,24 @@ footer {
 #submit:hover {
     background-color: #52520695;
     border: 1px solid #52520695;
+}
+
+@media screen and (max-width: 600px) {
+    .task {
+        display: block !important;
+    }
+    .todoText {
+        width: 100% !important;
+    }
+    .buttons {
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0.5rem;
+    }
+    .wrapper {
+        padding: 1.5rem !important;
+    }
+    .todoText {
+        text-align: center !important;
+    }
 }

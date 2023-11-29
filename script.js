@@ -110,6 +110,7 @@ const getTasks = async () => {
       taskListItemButtonStatus.classList.add("btn", "btn-success")
       taskListItemButtonStatus.setAttribute("title", "Mark task as completed")
       taskListItemButtonStatus.textContent = "Done"
+      taskListItemButtonStatus.insertAdjacentHTML("afterbegin", "<i class=\"las la-check\"></i> ")
       
       const taskListItemButtonDelete = document.createElement("button")
       taskListItemButtonDelete.classList.add("btn", "btn-danger")
