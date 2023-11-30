@@ -17,9 +17,6 @@ const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9
 const taskList = document.querySelector('#taskList')
 const createTaskForm = document.querySelector('#addTaskForm')
 
-    // Sätta ID
-    // Delete request
-
 
 /* CREATE TASK
 
@@ -29,13 +26,11 @@ Functions:
 
 */
 
-
-
 createTaskForm.addEventListener('submit', async (e) => {
   e.preventDefault()
 
   
-
+  // Value from user input field, and set default completed status of false
   const addTask = {
     title: createTaskForm['taskInput'].value,
     completed: false
@@ -51,12 +46,11 @@ createTaskForm.addEventListener('submit', async (e) => {
     const taskInput = document.getElementById("taskInput");
      
     if (!taskInput.value) {
-      let valid = false
       const updateMessage = document.querySelector('#status-message')
       updateMessage.classList.toggle("fade-out")
       updateMessage.textContent = "Please, enter a name for your task."
     }
-    return valid
+
   }
 
 if(valid === true) {
@@ -92,7 +86,7 @@ if(valid === true) {
   }
 
 }
-
+renderTasks()
 
 })
 
