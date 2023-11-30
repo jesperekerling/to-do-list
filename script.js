@@ -45,20 +45,24 @@ createTaskForm.addEventListener('submit', async (e) => {
       body: JSON.stringify(addTask)
     })
   
-    if(res.status !== 201) {
+    if(apiresponse.status !== 201) {
       throw new Error('Could not create new to do note: ' + apiresponse.status)
     }
-    console.log("hej")
-    const newTask = await apiresponse.json()
 
+    const newTask = await apiresponse.json()
+    data.push(newTask)
+
+    renderTasks()
+    createTaskForm.reset()
+    
   } catch (err) {
+    console.log(err.message)
     document.createElement('beforeend', `
     <div class="fade-out" id="status-message">
       <p>Something with your input is wrong.</p>
     </div>
     `)
-    updateTasks()
-    createTaskForm.reset()
+
     document.querySelector('#status-message').addEventListener('animationend', e => {
       e.target.remove()
     })
@@ -68,6 +72,7 @@ createTaskForm.addEventListener('submit', async (e) => {
 
 
 
+let data = []
 
 // Get tasks
 
@@ -80,91 +85,10 @@ const updateTasks = async () => {
       throw new Error('Something went wrong, status: ' + res.status)
     }
 
-    const data = await res.json()
+    data = await res.json()
   
-    taskList.innerHTML = ""
     
-    data.forEach(todo => {
-      
-      // Creates the task list HTML with JavaScript
-      const taskListItem = document.createElement("div")
-      taskListItem.classList.add("task", "flex", todo.completed) // Adding current status from API to our task list item, to be able to style true status with CSS
-      taskListItem.setAttribute("id", todo._id);
-      
-      const taskListItemTitle = document.createElement("div")
-      taskListItemTitle.classList.add("todoText")
-      taskListItemTitle.textContent = todo.title
-      
-      const taskListItemButtonsDiv = document.createElement("div")
-      taskListItemButtonsDiv.classList.add("buttons")
-      
-      const taskListItemButtonStatus = document.createElement("button")
-      taskListItemButtonStatus.classList.add("btn", "btn-success")
-      taskListItemButtonStatus.setAttribute("title", "Mark task as completed")
-      taskListItemButtonStatus.textContent = "Done"
-      taskListItemButtonStatus.insertAdjacentHTML("afterbegin", "<i class=\"las la-check\"></i> ")
-      
-      const taskListItemButtonDelete = document.createElement("button")
-      taskListItemButtonDelete.classList.add("btn", "btn-danger")
-      taskListItemButtonDelete.setAttribute("title", "Delete Task")
-//      taskListItemButtonDelete.textContent = "Delete" // Option if we want icon and text in the delete button
-      taskListItemButtonDelete.insertAdjacentHTML("afterbegin", "<i class=\"las la-trash\"></i> ")
-
-      
-      taskList.appendChild(taskListItem)
-      taskListItem.appendChild(taskListItemTitle)
-      taskListItem.appendChild(taskListItemButtonsDiv)
-      taskListItemButtonsDiv.appendChild(taskListItemButtonStatus)
-      taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
-      
-      taskListItemButtonDelete.setAttribute("id", todo._id);
-
-
-      
-
-
-      // AddEventListener for the status button
-      taskListItemButtonStatus.addEventListener('click', async () => {
-
-        await updateTodo(todo._id, todo.completed);
-
-        if(todo.completed === true) {
-          console.log("Completed status changed to " + todo.completed)
-          const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.toggle("fade-out")
-          updateMessage.textContent = "Task marked as uncompleted"
-        }
-        else if(todo.completed === false) {      
-          // Printing out the status of the task in the console
-          console.log("Completed status changed to " + todo.completed)
-          const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.toggle("fade-out")
-          updateMessage.textContent = "Task marked as completed"
-
-        }
-        return        
-      });
-
-      // AddEventListener for the delete button
-      taskListItemButtonDelete.addEventListener('click', async () => {
-        if(todo.completed === true) {
-          await deleteTodo(todo._id);
-          const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.toggle("fade-out")
-          updateMessage.textContent = "Task item deleted."
-          return
-        }
-        else if(todo.completed === false){
-          // Status message display when task item is deleted
-          const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.toggle("fade-out")
-          updateMessage.textContent = "Task must be marked as completed, before deleting it."
-          return
-        }
-      });
-      
-      
-    })
+    renderTasks()
 
   } catch(err) {
     document.body.insertAdjacentHTML('beforeend', `
@@ -172,10 +96,103 @@ const updateTasks = async () => {
       Something went wrong. Please try again or contact System Administrator.
     </div>
     `)
-    document.querySelector('#status-meessage').addEventListener('animationend', e => {
+    document.querySelector('#status-message').addEventListener('animationend', e => {
       e.target.remove()
     })
   }
+}
+
+
+const renderTasks = () =>  {
+
+  taskList.innerHTML = ""
+
+  data.forEach(todo => {
+      
+    // Creates the task list HTML with JavaScript
+    const taskListItem = document.createElement("div")
+    taskListItem.classList.add("task", "flex", todo.completed) // Adding current status from API to our task list item, to be able to style true status with CSS
+    taskListItem.setAttribute("id", todo._id);
+    
+    const taskListItemTitle = document.createElement("div")
+    taskListItemTitle.classList.add("todoText")
+    taskListItemTitle.textContent = todo.title
+    
+    const taskListItemButtonsDiv = document.createElement("div")
+    taskListItemButtonsDiv.classList.add("buttons")
+    
+    const taskListItemButtonStatus = document.createElement("button")
+    taskListItemButtonStatus.classList.add("btn", "btn-success")
+    taskListItemButtonStatus.setAttribute("title", "Mark task as completed")
+    taskListItemButtonStatus.textContent = "Done"
+    taskListItemButtonStatus.insertAdjacentHTML("afterbegin", "<i class=\"las la-check\"></i> ")
+    
+    const taskListItemButtonDelete = document.createElement("button")
+    taskListItemButtonDelete.classList.add("btn", "btn-danger")
+    taskListItemButtonDelete.setAttribute("title", "Delete Task")
+//      taskListItemButtonDelete.textContent = "Delete" // Option if we want icon and text in the delete button
+    taskListItemButtonDelete.insertAdjacentHTML("afterbegin", "<i class=\"las la-trash\"></i> ")
+
+    
+    taskList.prepend(taskListItem)
+    taskListItem.appendChild(taskListItemTitle)
+    taskListItem.appendChild(taskListItemButtonsDiv)
+    taskListItemButtonsDiv.appendChild(taskListItemButtonStatus)
+    taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
+    
+    taskListItemButtonDelete.setAttribute("id", todo._id);
+
+
+    
+
+
+    // AddEventListener for the status button
+    taskListItemButtonStatus.addEventListener('click', async () => {
+
+      await updateTodo(todo._id, todo.completed);
+      
+      const updateMessage = document.querySelector('#status-message')
+
+      if(todo.completed === true) {
+        console.log("Completed status changed to " + todo.completed)
+        updateMessage.textContent = "Task marked as uncompleted"
+      }
+      else if(todo.completed === false) {      
+        // Printing out the status of the task in the console
+        console.log("Completed status changed to " + todo.completed)
+        updateMessage.textContent = "Task marked as completed" 
+      }
+
+      updateMessage.classList.add("fade-out")
+
+      updateMessage.addEventListener('animationend', e => {
+        updateMessage.classList.remove("fade-out")
+      }, {once: true})
+      return
+
+    });
+
+    // AddEventListener for the delete button
+    taskListItemButtonDelete.addEventListener('click', async () => {
+      if(todo.completed === true) {
+        await deleteTodo(todo._id);
+        const updateMessage = document.querySelector('#status-message')
+        updateMessage.classList.toggle("fade-out")
+        updateMessage.textContent = "Task item deleted."
+        return
+      }
+      else if(todo.completed === false){
+        // Status message display when task item is deleted
+        const updateMessage = document.querySelector('#status-message')
+        updateMessage.classList.toggle("fade-out")
+        updateMessage.textContent = "Task must be marked as completed, before deleting it."
+        return
+      }
+    });
+    
+    
+  })
+
 }
 
 updateTasks()

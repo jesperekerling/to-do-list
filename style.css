@@ -111,13 +111,12 @@ footer {
     bottom: 1rem;
     right: 1rem;
     box-shadow: 2px 2px 8px 2px #00000046;
-}
-#status-message.show {
-    display: block;
+    transform: translateY(200%);
 }
 #status-message p {
     margin: 0;
 }
+
 .fade-out {
     animation: status-animation 3s both;
 }
