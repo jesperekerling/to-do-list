@@ -88,7 +88,7 @@ const updateTasks = async () => {
       
       // Creates the task list HTML with JavaScript
       const taskListItem = document.createElement("div")
-      taskListItem.classList.add("task", "flex")
+      taskListItem.classList.add("task", "flex", todo.completed)
       taskListItem.setAttribute("id", todo._id);
       
       const taskListItemTitle = document.createElement("div")
@@ -117,43 +117,29 @@ const updateTasks = async () => {
       taskListItemButtonsDiv.appendChild(taskListItemButtonStatus)
       taskListItemButtonsDiv.appendChild(taskListItemButtonDelete)
       
-
-
       taskListItemButtonDelete.setAttribute("id", todo._id);
 
 
-
-      //CHANGES FOR CHECKS HERE
-
       
-      // check for the completed status and if completed is false, show the popup and don't delete the todo
-      // if completed is true, delete the todo
+      // AddEventListener for the delete button
       taskListItemButtonDelete.addEventListener('click', async () => {
           if(todo.completed === true) {
-              popup.classList.add("open-popup");
-              closeBtn.addEventListener('click', () => {
-                  popup.classList.remove("open-popup");
-              })
-              
+            await deleteTodo(todo._id);
               return;
           }
           else if(todo.completed === false){
-              await deleteTodo(todo._id);
+              console.log("Task not completed, can't delete")
           }
       });
 
+      // AddEventListener for the status button
       taskListItemButtonStatus.addEventListener('click', async () => {
-        if(todo.completed === true) {
-            //popup.classList.add("open-popup");
-            closeBtn.addEventListener('click', () => {
-                popup.classList.remove("open-popup");
-            })
-            
-            return;
-        }
-        else if(todo.completed === false){
-            await updateTodo(todo.completed);
-        }
+
+        await updateTodo(todo._id, todo.completed);
+        
+        taskListItem.classList.add("hej");
+        console.log("hej2")
+
     });
 
       
@@ -179,7 +165,7 @@ updateTasks()
 const deleteTodo = async (id) => {
 
   //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.
-  const API_URL2 = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`;
+  const API_URL2 = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`
   const apiResponse2 = await fetch(API_URL2, {
       method: 'DELETE'
   });
@@ -203,14 +189,15 @@ const updateTodo = async (id, status) => {
   }
 
   //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.
-  const API_URL = 'https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
+  const API_URL = `https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe`
   const apiResponse3 = await fetch(API_URL, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        completed: status
+        completed: !status,
+        
       })
   });
   
@@ -221,6 +208,8 @@ const updateTodo = async (id, status) => {
 
   const todoId2 = await apiResponse3.json();
   console.log("Task item updated: " + todoId2)
+  
+  
   
   updateTasks()
 }

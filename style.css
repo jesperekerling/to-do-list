@@ -93,6 +93,12 @@ footer {
     border: 1px solid #52520695;
 }
 
+.true {
+    text-decoration: line-through;
+    color: #525206;
+    background-color: #ffffff46;
+}
+
 @media screen and (max-width: 600px) {
     .task {
         display: block !important;
