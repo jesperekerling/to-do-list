@@ -40,10 +40,11 @@ createTaskForm.addEventListener('submit', async (e) => {
   let valid = true
   validate(addTask)
 
+  const taskInput = document.getElementById("taskInput");
   
   function validate(e) {
 
-    const taskInput = document.getElementById("taskInput");
+  const taskInput = document.getElementById("taskInput");
      
     if (!taskInput.value) {
       const updateMessage = document.querySelector('#status-message')
