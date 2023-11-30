@@ -53,13 +53,13 @@ createTaskForm.addEventListener('submit', async (e) => {
 
   } catch (err) {
     document.createElement('beforeend', `
-    <div class="pop" id="toast">
-      Something with your input is wrong.
+    <div class="show" id="status-message">
+      <p>Something with your input is wrong.</p>
     </div>
     `)
     updateTasks()
     createTaskForm.reset()
-    document.querySelector('#toast').addEventListener('animationend', e => {
+    document.querySelector('#status-message').addEventListener('animationend', e => {
       e.target.remove()
     })
     
@@ -88,7 +88,7 @@ const updateTasks = async () => {
       
       // Creates the task list HTML with JavaScript
       const taskListItem = document.createElement("div")
-      taskListItem.classList.add("task", "flex", todo.completed) // Adding status to our task list item for styling in CSS
+      taskListItem.classList.add("task", "flex", todo.completed) // Adding current status from API to our task list item, to be able to style true status with CSS
       taskListItem.setAttribute("id", todo._id);
       
       const taskListItemTitle = document.createElement("div")
@@ -125,10 +125,16 @@ const updateTasks = async () => {
       taskListItemButtonDelete.addEventListener('click', async () => {
           if(todo.completed === true) {
             await deleteTodo(todo._id);
+            const updateMessage = document.querySelector('#status-message')
+            updateMessage.classList.add("show", "fade-out")
+            updateMessage.textContent = "Task item deleted."
               return;
           }
           else if(todo.completed === false){
-              console.log("Task not completed, can't delete")
+            // Status message display when task item is deleted
+            const updateMessage = document.querySelector('#status-message')
+            updateMessage.classList.add("show", "fade-out")
+            updateMessage.textContent = "Task not completed. Can't delete"
           }
       });
 
@@ -139,6 +145,9 @@ const updateTasks = async () => {
         
         // Printing out the status of the task in the console
         console.log("Completed status changed to " + todo.completed)
+        const updateMessage = document.querySelector('#status-message')
+        updateMessage.classList.add("show", "fade-out")
+        updateMessage.textContent = "Task status changed to " + todo.completed
 
     });
 
@@ -148,11 +157,11 @@ const updateTasks = async () => {
 
   } catch(err) {
     document.body.insertAdjacentHTML('beforeend', `
-    <div class="pop" id="toast">
-      Something went wrong 1
+    <div class="status-messsage" id="toast">
+      Something went wrong. Please try again or contact System Administrator.
     </div>
     `)
-    document.querySelector('#toast').addEventListener('animationend', e => {
+    document.querySelector('#status-meessage').addEventListener('animationend', e => {
       e.target.remove()
     })
   }
@@ -177,6 +186,8 @@ const deleteTodo = async (id) => {
 
   const todoId = await apiResponse2.json();
   
+
+
   updateTasks()
 }
 
@@ -202,6 +213,10 @@ const updateTodo = async (id, status) => {
   
   if(!apiResponse3.ok) {
       console.log(apiResponse3)
+      const updateMessage = document.querySelector('#status-message')
+        updateMessage.classList.add("show", "fade-out")
+        updateMessage.textContent = "Hello " + todo.completed
+
       return
   }
 
