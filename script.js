@@ -88,7 +88,7 @@ const updateTasks = async () => {
       
       // Creates the task list HTML with JavaScript
       const taskListItem = document.createElement("div")
-      taskListItem.classList.add("task", "flex", todo.completed)
+      taskListItem.classList.add("task", "flex", todo.completed) // Adding status to our task list item for styling in CSS
       taskListItem.setAttribute("id", todo._id);
       
       const taskListItemTitle = document.createElement("div")
@@ -107,7 +107,7 @@ const updateTasks = async () => {
       const taskListItemButtonDelete = document.createElement("button")
       taskListItemButtonDelete.classList.add("btn", "btn-danger")
       taskListItemButtonDelete.setAttribute("title", "Delete Task")
-//      taskListItemButtonDelete.textContent = "Delete"
+//      taskListItemButtonDelete.textContent = "Delete" // Option if we want icon and text in the delete button
       taskListItemButtonDelete.insertAdjacentHTML("afterbegin", "<i class=\"las la-trash\"></i> ")
 
       
@@ -137,8 +137,8 @@ const updateTasks = async () => {
 
         await updateTodo(todo._id, todo.completed);
         
-        taskListItem.classList.add("hej");
-        console.log("hej2")
+        // Printing out the status of the task in the console
+        console.log("Completed status changed to " + todo.completed)
 
     });
 
@@ -176,7 +176,6 @@ const deleteTodo = async (id) => {
   }
 
   const todoId = await apiResponse2.json();
-  console.log("Task item deleted: " + todoId)
   
   updateTasks()
 }
@@ -207,32 +206,7 @@ const updateTodo = async (id, status) => {
   }
 
   const todoId2 = await apiResponse3.json();
-  console.log("Task item updated: " + todoId2)
-  
   
   
   updateTasks()
 }
-
-
-
-
-/*
-
-const completed = document.getElementById("button")
-
-completed.addEventListener("click", (event) => {
-  event.target.classList.add("completed", todo._id);
-})
-  //completed.classList.add("completed");
-
-
-
-function markAsCompleted () {
-  const completed = document.getElementById("button")
-  completed.addEventListener("click", (event) => {
-    event.target.classList.add("completed", todo._id);
-  })
-}
-
-*/
