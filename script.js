@@ -10,7 +10,7 @@
 const API_URL = 'https://js1-todo-api.vercel.app/api/todos?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 
 // URL for GET ID, PUT ID and DELETE
-const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/{id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
+const API_URL2 = 'https://js1-todo-api.vercel.app/api/todos/${id}?apikey=d0417e9b-dfeb-4c69-acc9-7fbb86ebfcfe'
 
 
 
@@ -140,9 +140,9 @@ const updateTasks = async () => {
           const updateMessage = document.querySelector('#status-message')
           updateMessage.classList.toggle("fade-out")
           updateMessage.textContent = "Task marked as completed"
-        
+
         }
-        return
+        return        
       });
 
       // AddEventListener for the delete button
@@ -150,17 +150,16 @@ const updateTasks = async () => {
         if(todo.completed === true) {
           await deleteTodo(todo._id);
           const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.remove("completed")
-          updateMessage.classList.add("fade-out")
+          updateMessage.classList.toggle("fade-out")
           updateMessage.textContent = "Task item deleted."
-            return;
+          return
         }
         else if(todo.completed === false){
           // Status message display when task item is deleted
           const updateMessage = document.querySelector('#status-message')
-          updateMessage.classList.remove("fade-out")
-          updateMessage.classList.add("completed")
+          updateMessage.classList.toggle("fade-out")
           updateMessage.textContent = "Task must be marked as completed, before deleting it."
+          return
         }
       });
       
@@ -169,7 +168,7 @@ const updateTasks = async () => {
 
   } catch(err) {
     document.body.insertAdjacentHTML('beforeend', `
-    <div class="status-messsage" id="toast">
+    <div class="fade-out" id="status-message">
       Something went wrong. Please try again or contact System Administrator.
     </div>
     `)
@@ -182,7 +181,7 @@ const updateTasks = async () => {
 updateTasks()
 
 
-//DELETE (Delete a todo from the server and from the page)
+// DELETE
 const deleteTodo = async (id) => {
 
   //Not sure why I have to set this API_URL2 again (it has a value from start).. Need to looking into it.

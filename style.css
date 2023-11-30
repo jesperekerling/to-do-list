@@ -110,6 +110,7 @@ footer {
     margin-bottom: 1rem;
     bottom: 1rem;
     right: 1rem;
+    box-shadow: 2px 2px 8px 2px #00000046;
 }
 #status-message.show {
     display: block;
@@ -117,17 +118,10 @@ footer {
 #status-message p {
     margin: 0;
 }
-.fade-out, .completed {
-    position: fixed;
-    background-color: #525206;
-    color: #fff;
-    padding: 1.5rem 3rem;
-    bottom: 1rem;
-    right: 1rem;
-    box-shadow: 2px 2px 8px 2px #00000046;
-    animation: status-message-animation 3s both;
+.fade-out {
+    animation: status-animation 3s both;
 }
-@keyframes status-message-animation {
+@keyframes status-animation {
     0% {
       transform: translateY(200%);
       opacity: 1;
