@@ -30,14 +30,36 @@ Functions:
 */
 
 
+
 createTaskForm.addEventListener('submit', async (e) => {
   e.preventDefault()
+
+  
 
   const addTask = {
     title: createTaskForm['taskInput'].value,
     completed: false
   }
 
+
+  let valid = true
+  validate(addTask)
+
+  
+  function validate(e) {
+
+    const taskInput = document.getElementById("taskInput");
+     
+    if (!taskInput.value) {
+      let valid = false
+      const updateMessage = document.querySelector('#status-message')
+      updateMessage.classList.toggle("fade-out")
+      updateMessage.textContent = "Please, enter a name for your task."
+    }
+    return valid
+  }
+
+if(valid === true) {
   try {
     const apiresponse = await fetch(API_URL, {
       method: 'POST',
@@ -68,6 +90,10 @@ createTaskForm.addEventListener('submit', async (e) => {
     })
     
   }
+
+}
+
+
 })
 
 
@@ -253,3 +279,24 @@ const updateTodo = async (id, status) => {
   
   updateTasks()
 }
+
+
+
+
+
+/*
+const taskInput = addTask.title
+function validateTaskInput (taskInput) {
+
+  const updateMessage = document.querySelector('#status-message')
+  
+  if(taskInput.value.trim() === "") {
+    updateMessage.classList.toggle("fade-out")
+    updateMessage.textContent = "Must enter some letters."
+  }
+  else if(taskInput.value.trim().length <= 2) {
+    
+  }
+}
+
+*/
