@@ -200,20 +200,26 @@ const renderTasks = () =>  {
 
     // AddEventListener for the delete button
     taskListItemButtonDelete.addEventListener('click', async () => {
+
+         
+      const updateMessage = document.querySelector('#status-message')
+
       if(todo.completed === true) {
         await deleteTodo(todo._id);
-        const updateMessage = document.querySelector('#status-message')
-        updateMessage.classList.toggle("fade-out")
         updateMessage.textContent = "Task item deleted."
-        return
       }
       else if(todo.completed === false){
         // Status message display when task item is deleted
-        const updateMessage = document.querySelector('#status-message')
-        updateMessage.classList.toggle("fade-out")
         updateMessage.textContent = "Task must be marked as completed, before deleting it."
-        return
       }
+
+      updateMessage.classList.add("fade-out")
+
+      updateMessage.addEventListener('animationend', e => {
+        updateMessage.classList.remove("fade-out")
+      }, {once: true})
+      return
+
     });
     
     
