@@ -53,7 +53,7 @@ createTaskForm.addEventListener('submit', async (e) => {
 
   } catch (err) {
     document.createElement('beforeend', `
-    <div class="show" id="status-message">
+    <div class="fade-out" id="status-message">
       <p>Something with your input is wrong.</p>
     </div>
     `)
@@ -121,36 +121,48 @@ const updateTasks = async () => {
 
 
       
-      // AddEventListener for the delete button
-      taskListItemButtonDelete.addEventListener('click', async () => {
-          if(todo.completed === true) {
-            await deleteTodo(todo._id);
-            const updateMessage = document.querySelector('#status-message')
-            updateMessage.classList.add("show", "fade-out")
-            updateMessage.textContent = "Task item deleted."
-              return;
-          }
-          else if(todo.completed === false){
-            // Status message display when task item is deleted
-            const updateMessage = document.querySelector('#status-message')
-            updateMessage.classList.add("show", "fade-out")
-            updateMessage.textContent = "Task not completed. Can't delete"
-          }
-      });
+
 
       // AddEventListener for the status button
       taskListItemButtonStatus.addEventListener('click', async () => {
 
         await updateTodo(todo._id, todo.completed);
+
+        if(todo.completed === true) {
+          console.log("Completed status changed to " + todo.completed)
+          const updateMessage = document.querySelector('#status-message')
+          updateMessage.classList.toggle("fade-out")
+          updateMessage.textContent = "Task marked as uncompleted"
+        }
+        else if(todo.completed === false) {      
+          // Printing out the status of the task in the console
+          console.log("Completed status changed to " + todo.completed)
+          const updateMessage = document.querySelector('#status-message')
+          updateMessage.classList.toggle("fade-out")
+          updateMessage.textContent = "Task marked as completed"
         
-        // Printing out the status of the task in the console
-        console.log("Completed status changed to " + todo.completed)
-        const updateMessage = document.querySelector('#status-message')
-        updateMessage.classList.add("show", "fade-out")
-        updateMessage.textContent = "Task status changed to " + todo.completed
+        }
+        return
+      });
 
-    });
-
+      // AddEventListener for the delete button
+      taskListItemButtonDelete.addEventListener('click', async () => {
+        if(todo.completed === true) {
+          await deleteTodo(todo._id);
+          const updateMessage = document.querySelector('#status-message')
+          updateMessage.classList.remove("completed")
+          updateMessage.classList.add("fade-out")
+          updateMessage.textContent = "Task item deleted."
+            return;
+        }
+        else if(todo.completed === false){
+          // Status message display when task item is deleted
+          const updateMessage = document.querySelector('#status-message')
+          updateMessage.classList.remove("fade-out")
+          updateMessage.classList.add("completed")
+          updateMessage.textContent = "Task must be marked as completed, before deleting it."
+        }
+      });
       
       
     })
@@ -214,7 +226,7 @@ const updateTodo = async (id, status) => {
   if(!apiResponse3.ok) {
       console.log(apiResponse3)
       const updateMessage = document.querySelector('#status-message')
-        updateMessage.classList.add("show", "fade-out")
+        //updateMessage.classList.toggle("fade-out")
         updateMessage.textContent = "Hello " + todo.completed
 
       return
