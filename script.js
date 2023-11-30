@@ -280,24 +280,3 @@ const updateTodo = async (id, status) => {
   
   updateTasks()
 }
-
-
-
-
-
-/*
-const taskInput = addTask.title
-function validateTaskInput (taskInput) {
-
-  const updateMessage = document.querySelector('#status-message')
-  
-  if(taskInput.value.trim() === "") {
-    updateMessage.classList.toggle("fade-out")
-    updateMessage.textContent = "Must enter some letters."
-  }
-  else if(taskInput.value.trim().length <= 2) {
-    
-  }
-}
-
-*/

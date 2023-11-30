@@ -7,7 +7,7 @@ A to do list in JavaScript.
 
 ## About
 
-Out teacher created a API for us, so we could learn how to fetch data with JavaScript. Including GET, POST, PUT and DELETE.
+Our teacher created a API for us, so we could learn how to fetch data with JavaScript. Including GET, POST, PUT and DELETE.
 
 
 ## Project includes
